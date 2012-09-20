@@ -1,337 +1,554 @@
-<!doctype html>  
+<!doctype html>
+
 <html lang="en">
-	
-	<head>
-		<meta charset="utf-8">
-		
-		<title>reveal.js - The HTML Presentation Framework</title>
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+<head>
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-		
-		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-		
-		<link rel="stylesheet" href="css/main.css">
-		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+    <meta charset="utf-8">
 
-		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <title>Anatomy of a Physics Engine</title>
+    <meta name="description" content="101 of physics simulation: learn basic math and physics equations and how to implement them in discrete fashion.">
+    <meta name="author" content="Kamil Trebunia">
 
-		<script>
-			// If the query includes 'print-pdf' we'll use the PDF print sheet
-			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-		</script>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
-	
-	<body>
-		
-		<div class="reveal">
-
-			<!-- Used to fade in a background when a specific slide state is reached -->
-			<div class="state-background"></div>
-			
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
-				<section>
-					<h1>Reveal.js</h1>
-					<h3>HTML Presentations Made Easy</h3>
-				</section>
-				
-				<section>
-					<h2>Heads Up</h2>
-					<p>
-						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with 
-						support for CSS 3D transforms to see it in its full glory.
-					</p>
-					<p>
-						<i><small>- <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small></i>
-					</p>
-
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you run the speaker notes server.
-					</aside>
-				</section>
-				
-				<!-- Example of nested vertical slides -->
-				<section>
-					<section>
-						<h2>Vertical Slides</h2>
-						<p>
-							Slides can be nested inside of other slides,
-							try pressing <a href="#/2/1">down</a>.
-						</p>
-						<a href="#/2/1" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 1</h2>
-						<p>Press down or up to navigate.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>Cornify</p>
-						<a class="test" href="http://cornify.com">
-							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 3</h2>
-						<p>That's it, time to go back up.</p>
-						<a href="#/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
-
-				<section>
-					<h2>Holistic Overview</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview!
-					</p>
-				</section>
-
-				<section>
-					<h2>rvl.io</h2>
-					<p>
-						If you don't like writing slides in HTML you can use the online editor <a href="http://www.rvl.io" target="_blank">rvl.io</a>.
-					</p>
-				</section>
-
-				<section>
-					<h2>Works in Mobile Safari</h2>
-					<p>
-						Try it out! You can swipe through the slides pinch your way to the overview.
-					</p>
-				</section>
-
-				<section>
-					<h2>Marvelous Unordered List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
-				
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
-				</section>
-
-				<section data-markdown>
-					## Markdown support
-					
-					For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-
-					<pre><code contenteditable style="margin-top: 20px;">&lt;section data-markdown&gt;
-  ## Markdown support
-
-  For those of you who like that sort of thing. 
-  Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-&lt;/section&gt;
-					</code></pre>
-				</section>
-
-				<section>
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="http://lab.hakim.se/reveal-js/?transition=cube">Cube</a> -
-						<a href="http://lab.hakim.se/reveal-js/?transition=page">Page</a> -
-						<a href="http://lab.hakim.se/reveal-js/?transition=concave">Concave</a> -
-						<a href="http://lab.hakim.se/reveal-js/?transition=linear">Linear</a>
-					</p>
-				</section>
-
-				<section>
-					<h2>Themes</h2>
-					<p>
-						Reveal.js comes with a few themes built in: <br>
-						<a href="http://lab.hakim.se/reveal-js/?theme=sky">Sky</a> -
-						<a href="http://lab.hakim.se/reveal-js/?theme=beige">Beige</a> -
-						<a href="http://lab.hakim.se/reveal-js/?theme=simple">Simple</a> -
-						<a href="http://lab.hakim.se/reveal-js/">Default</a>
-					</p>
-					<p>
-						<small>
-							* Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
-						</small>
-					</p>
-				</section>
-
-				<section>
-					<section data-state="alert">
-						<h2>Global State</h2>
-						<p>
-							Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-							will be added as a class to the document element when the slide is open. This lets you
-							apply broader style changes, like switching the background.
-						</p>
-						<a href="#/7/1" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-state="blackout">
-						<h2>"blackout"</h2>
-						<a href="#/7/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-state="soothe">
-						<h2>"soothe"</h2>
-						<a href="#/7/0" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
-
-				<section data-state="customevent">
-					<h2>Custom Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-				</section>
-
-				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						The nice thing about standards is that there are so many to choose from</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						For years there has been a theory that millions of monkeys typing at random on millions of typewriters would 
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.
-					</blockquote>
-				</section>
-				
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
     
-    var nodes = document.querySelectorAll( selector );
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    
+    <link rel="stylesheet" href="css/customizations.css">
+    
+</head>
 
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
+<body>
 
-      if( !node.className ) ) {
-        node.className += ' roll';
-      }
+    <div class="reveal">
+
+        <!-- Used to fade in a background when a specific slide state is reached -->
+        <div class="state-background"></div>
+
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+
+            <section>
+                <h1>Anatomy of a&nbsp;Physics Engine</h1>
+                <p><address>by <a href="https://twitter.com/KamilTrebunia">@ Kamil Trebunia</a></address></p>
+            </section>
+
+            <section>
+                <h2>Why?</h2>
+
+                <ul>
+                    <li>It's not magic</li>
+                    <li class="fragment">Know your tool</li>
+                    <li class="fragment">Discrete computations &rarr; quirks</li>
+                    <li class="fragment">Fun</li>
+                </li>
+
+                <aside class="notes">
+                    <p>You don't need to comprehend simple machines physics theory to use a hammer,
+                        but if you do know how lever physics work you will know how to augument
+                        your hammer or build a bigger one if your taks require it.</p>
+                </aside>
+            </section>
+
+            <section>
+                <h2>Goals</h2>
+
+                <ul>
+                    <li><strong>Understand</strong> discrete physics simulation</li>
+                    <li><strong>Understand</strong> necessary concepts</li>
+                    <li><strong>Build</strong> your own engine <em>(or modify mine)</em></li>
+                </li>
+            </section>
+
+            <section>
+
+                <section>
+                    <h2>Vector</h2>
+
+                    <ul>
+                        <li>direction</li>
+                        <li>magnitude <em>(or length)</em></li>
+                    </ul>
+
+                    <div>
+                        <img class="vector" src="http://upload.wikimedia.org/wikipedia/commons/5/5d/Position_vector.svg" alt="A vector in the Cartesian plane, showing the position of a point A with coordinates (2,3).">
+                    </div>
+
+                    <aside class="notes">
+                        <p>I am aware that everyone knows what vector is. I am just making sure that we're on the same foot vocabulary-wise.</p>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Examples</h3>
+                    <ul>
+                        <li>displacement &rarr; distance</li>
+                        <li>velocity &rarr; speed</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Code</h3>
+                    <pre><code>
+    vector = {
+        x: 0,
+        y: 0
     };
-  }
-}
-					</code></pre>
-					<p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
-				
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
-				</section>
+                    </code></pre>
+                </section>
+            </section>
+            
+            <section>
+                <section>
+                    <h2>Rigid Body</h2>
+                    
+                    <p><em>(== non deformable)</em></p>
+                    
+                    <ul>
+                        <li>position</li>
+                        <li>velocity</li>
+                        <li>mass</li>
+                        <li class="fragment">
+                            entity/material type:
+                            <ul>
+                                <li>coefficient of restitution (COR)</li>
+                                <li>coefficient of friction (COF)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
 
-				<section>
-					<h2>Fragmented Views</h2>
-					<p>Hit the next arrow...</p>
-					<p class="fragment">... to step through ...</p>
-					<ol>
-						<li class="fragment"><code>any type</code></li>
-						<li class="fragment"><em>of view</em></li>
-						<li class="fragment"><strong>fragments</strong></li>
-					</ol>
-				</section>
-				
-				<section>
-					<h2>Spectacular image!</h2>
-					<a class="image" href="http://hakim.se/experiments/html5/breakdom/" target="_blank">
-						<img width="320" height="412" src="https://s3.amazonaws.com/hakim-static/reveal-js/breakdom.png" alt="BreakDOM game screenshot">
-					</a>
-				</section>
-				
-				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, below is an example that's been uploaded to SlideShare.</p>
-					<iframe id="slideshare" src="http://www.slideshare.net/slideshow/embed_code/13872948" width="455" height="356" style="margin:0;overflow:hidden;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
-					<script>
-						document.getElementById('slideshare').attributeName = 'allowfullscreen';
-					</script>
-				</section>
-				
-				<section>
-					<h2>Stellar Links</h2>
-					<ul>
-						<li><a href="https://github.com/hakimel/reveal.js">Source code on GitHub</a></li>
-						<li><a href="http://hakim.se/projects/reveal-js">Leave feedback on my site</a></li>
-						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
-					</ul>
-				</section>
-				
-				<section>
-					<h1>THE END</h1>
-					<h3>BY Hakim El Hattab / hakim.se</h3>
-				</section>
-			</div>
+                <section>
+                    <h3>Code</h2>
+                    <pre><code>
+    rigidBody = {
+    
+        position: {
+            x: 0,
+            y: 0
+        },
+        velocity: {
+            x: 0,
+            y: 0
+        },
+        
+        shape: RigidBody.Shape.CIRCLE,
+        
+        radius: 1,
+        
+        type: RigidBody.Type.GOLF_BALL,
+        
+        mass: 1
+        
+    };
+                    </code></pre>
 
-			<!-- The navigational controls UI -->
-			<aside class="controls">
-				<a class="left" href="#">&#x25C4;</a>
-				<a class="right" href="#">&#x25BA;</a>
-				<a class="up" href="#">&#x25B2;</a>
-				<a class="down" href="#">&#x25BC;</a>
-			</aside>
+                    <aside class="notes">
+                        <p>I would normally have more generic property called dimensions here instead
+                            of simple radius. But that didn't wouldn't fit my slide.</p>
+                    </aside>
+                </section>
 
-			<!-- Presentation progress bar -->
-			<div class="progress"><span></span></div>
-			
-		</div>
+                <section>
+                    <h3>More code</h2>
+                    <pre><code>
+    RigidBody.Shape = {
+        PARTICLE: 1,
+        CIRCLE: 2
+    };
+    
+    RigidBody.Type = {
+        GOLF_BALL: 1,   // tip: use binary masks
+        ROCK: 2         // (see use case below)
+    };
+    
+    RigidBody.COR = {
+        2: 0.5,
+        3: 0.78,
+        4: 0.1
+    };
+    
+    RigidBody.COF = {
+        3: 0.25,
+        4: 0.8
+    };
+                    </code></pre>
+                </section>
+            </section>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.min.js"></script>
+            <section>
+                
+                <section>
+                    <h2>Integration</h2>
+                    
+                    <h3>Definition</h3>
+                    
+                    <p class="block">Predicting object trajectory with numerical integration.</p>
+                    
+                    <div class="fragment">
+                        <p>...which means...</p>
+                        <p class="block">Each frame advance position of body by adding velocity multiplied by delta time <em>(number of frames per second)</em> onto it.</p>
+                    </div>
+                    
+                </section>
+                
+                <section>
+                    <h3>Preparation code</h3>
+                
+                    <pre><code>
+    var particle1 = {
+        
+            position: {
+                x: 0,
+                y: 0
+            },
+            
+            velocity: {
+                x: 3,
+                y: 4
+            }
+        
+        };
+    
+    
+    var bodies = [particle1, particle2, particle3...];
+                    </code></pre>
+                </section>
 
-		<script>
-			
-			// Full list of configuration options available here:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				
-				theme: Reveal.getQueryHash().theme || 'default', // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/linear(2d)
+                <section>
+                    <h3>Integration code</h3>
+                
+                    <pre><code>
+    function integrate (bodies, deltaTime) {
+    
+        bodies.forEach(function (body) {
+    
+            body.position.x += body.velocity.x * deltaTime;
+            body.position.y += body.velocity.y * deltaTime;
+            
+        });
+        
+    }
+                    </code></pre>
+                </section>
 
-				// Optional libraries used to extend on reveal.js
-				dependencies: [
-					{ src: 'lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: '/socket.io/socket.io.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
-					{ src: 'plugin/speakernotes/client.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
-				]
-			});
-			
-		</script>
+                <section>
+                    <h3>Loop code</h3>
+                
+                    <pre><code>
+    var previousTime = Date.now();
+    
+    (function tick () {
+    
+        var deltaTime = (Date.now() - previousTime) / 1000;
+    
+    
+        integrate(bodies, deltaTime);
+    
+    
+        previousTime = Date.now();
+    
+        setTimeout(tick, INTERVAL);
+    
+    }());
+                    </code></pre>
+                </section>
 
-	</body>
+            </section>
+
+            <section>
+            
+                <h2>Collisions</h2>
+                
+                <ol>
+                    <li class="fragment">Find intersections <em>(contacts)</em></li>
+                    <li class="fragment">
+                        Identify contact type:
+                        <ul>
+                            <li>colliding</li>
+                            <li>separating</li>
+                        </ul>
+                    </li>
+                    <li class="fragment">Resolve contact</li>
+                </ol>
+            
+            </section>
+            
+            <section>
+
+                <section>
+                    <h3>Particle vs axis-aligned lines</h3>
+                    
+                    <p>Highly optimized simulation for a very specific case.</p>
+                </section>
+                
+                <section>
+                    <h4>Preparation code</h4>
+                    
+                    <pre><code>
+    var particle = {
+    
+            position: { x: 0, y: 0 },
+            
+            velocity: {
+                x: 1,
+                y: 0
+            }
+        };
+        
+    var line = {
+            
+            normal: {
+                x: -1,
+                y: 0
+            },
+            
+            distance: 5
+        };
+                    </code></pre>
+                </section>
+                
+                <section>
+                    <h4>Code</h4>
+                    
+                    <pre><code>
+    if (line.normal.x < 0) {
+    
+        // Step #1: Identify intersection
+        
+        if (particle.position.x > line.distance) {
+        
+            // Step #2: Identify collision
+            
+            if (particle.velocity.x > 0) {
+            
+                // Step #3: Resolve collision
+            
+                particle.velocity.x *= -1;
+                
+            }
+            
+        }
+        
+    }
+                    </code></pre>
+
+                    <aside class="notes">
+                        <p>It's important we check two conditions - why?</p>
+                        <p>To resolve a collision we simply reverse velocity in the offending axis.</p>
+                    </aside>
+                </section>
+                
+                <section>
+                    <h4>Summary</h4>
+                    
+                    <ul>
+                        <li class="fragment">Impulse/velocity simulation</li>
+                        <li class="fragment">Conservation of momentum on reflection</li>
+                        <li class="fragment">Perfectly elastic collision</li>
+                        <li class="fragment">Line has infinite mass</li>
+                    </ul>
+                
+                    <aside class="notes">
+                        <ul>
+                            <li>Impulse/velocity instead of force/acceleration.</li>
+                            <li>Followed Newton's principle of conservation of momentum.</li>
+                            <li>Assumed materials types and COR equal 1 for that system meaning that no energy is lost.</li>
+                        </ul>
+                    </aside>
+                </section>
+                
+            </section>
+            
+            <section>
+            
+                <section>
+                    <h3>Generic solution</h3>
+                    
+                    <p>For circle-circle interactions.</p>
+                </section>
+                    
+                <section>
+                    <h4>Finding intersections</h4>
+                    
+                    <pre><code>
+    displacement = {
+        x: circleA.position.x - circleB.position.x,
+        y: circleA.position.y - circleB.position.y
+    };
+    
+    distance = Math.sqrt(displacement.x * displacement.x +
+                         displacement.y * displacement.y);
+    
+    penetration = circleA.radius + circleB.radius - distance;
+    
+    if (penetration > 0) {
+        // intersection
+    }
+                    </code></pre>
+                </section>
+                
+                <section>
+                    <h4>Identifying contact type</h4>
+                    
+                    <pre><code>
+    normal = {
+        x: displacement.x / distance,
+        y: displacement.y / distance
+    };
+    
+    closingVelocity = {
+        x: circleA.velocity.x - circleB.velocity.x,
+        y: circleB.velocity.y - circleB.velocity.y
+    };
+    
+    normalVelocity = {
+        x: normal.x * closingVelocity.x,
+        y: normal.y * closingVelocity.y
+    };
+    
+    if (normalVelocity < 0) {
+        // collision
+    }
+                    </code></pre>
+                </section>
+                
+                <section>
+                    <h4>Resolve collision</h4>
+            
+                    <pre><code>
+    reflectionVector = {
+    
+        x: 2 * normal.x * normalVelocity.x,
+        y: 2 * normal.y * normalVelocity.y
+        
+    };
+    
+    circleA.velocity.x -= reflectionVector.x / 2;
+    circleA.velocity.y -= reflectionVector.y / 2;
+    
+    circleB.velocity.x += reflectionVector.x / 2;
+    circleB.velocity.y += reflectionVector.y / 2;
+                    </code></pre>
+                </section>
+
+            </section>
+
+            <section>
+                <h3>Restitution</h3>
+
+                <pre><code>
+    cor = RigidBody.COR[circleA.type + circleB.type];
+                    
+    reflectionVector = {
+        x: (1 + cor) * normal.x * normalVelocity.x,
+        y: (1 + cor) * normal.y * normalVelocity.y
+    };
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Mass</h3>
+
+                <pre><code>
+    massRatioA = circleB.mass / (circleA.mass + circleB.mass);
+    massRatioB = circleA.mass / (circleA.mass + circleB.mass);
+    
+    circleA.velocity.x -= reflectionVector.x * massRatioA;
+    circleA.velocity.y -= reflectionVector.y * massRatioA;
+    
+    circleB.velocity.x += reflectionVector.x * massRatioB;
+    circleB.velocity.y += reflectionVector.y * massRatioB;
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Gravity</h3>
+
+                <pre><code>
+    GRAVITY = {
+        x: 0,
+        y: -9.81
+    };
+    
+    bodies.forEach(function (body) {
+    
+        body.velocity.x += GRAVITY.x * deltaTime,
+        body.velocity.y += GRAVITY.y * deltaTime
+    
+    });
+                </code></pre>
+            </section>
+
+            <section>
+                <h1>THE END</h1>
+            </section>
+
+            <section class="links">
+                <h2>Links</h2>
+                <ul>
+                    <li><a href="http://www.wildbunny.co.uk/blog/2011/04/06/physics-engines-for-dummies/">Physics Engines for Dummies</a></li>
+                    <li><a href="http://box2d.org/">Box2D - A 2D Physics Engine for Games</a></li>
+                    <li><a href="http://code.google.com/p/box2dweb/">box2dweb - Box2DFlash port to JavaScript</a></li>
+                </ul>
+                
+                <h3>More links</h3>
+                <p>(lang="pl")
+                <ul>
+                    <li><a href="https://www.facebook.com/groups/217169631654737/">JS News Group on Facebook</a></li>
+                    <li><a href="http://javascript.pl/">JavaScript.pl</a></li>
+                </ul>
+            </section>
+
+        </div>
+
+        <!-- The navigational controls UI -->
+        <aside class="controls">
+            <a class="left" href="#">&#x25C4;</a>
+            <a class="right" href="#">&#x25BA;</a>
+            <a class="up" href="#">&#x25B2;</a>
+            <a class="down" href="#">&#x25BC;</a>
+        </aside>
+
+        <!-- Presentation progress bar -->
+        <div class="progress"><span></span></div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            mouseWheel: false,
+
+            theme: Reveal.getQueryHash().theme || 'default', // available themes are in /css/theme
+            transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/linear(2d)
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: 'lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+                { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                { src: 'lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: 'lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: '/socket.io/socket.io.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
+                { src: 'plugin/speakernotes/client.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
+            ]
+        });
+
+    </script>
+
+</body>
 </html>
