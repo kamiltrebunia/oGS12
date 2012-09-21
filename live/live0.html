@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html lang="en"> 
+<meta charset="utf-8"> 
+    <head>
+    <title> Particles!</title>
+    <style type="text/css"> 
+        body { 
+            background-color:black; 
+            margin:0px; 
+            overflow : hidden; 
+        }
+        </style> 
+    </head>
+    
+    <body>
+        <script>
+
+var canvas = document.createElement('canvas'); 
+document.body.appendChild(canvas); 
+canvas.width = window.innerWidth; 
+canvas.height = window.innerHeight; 
+
+var c = canvas.getContext('2d'); 
+
+var SCALE = 10;
+c.transform(SCALE, 0, 0, -SCALE, canvas.width / 2, canvas.height / 2);
+c.fillStyle = 'white';
+
+
+var particles = []; 
+
+setInterval(loop, 1000/30); 
+
+var timeBefore = Date.now();
+
+function loop() {
+
+    var time = Date.now();
+    var deltaTime = (time - timeBefore) / 1000;
+    timeBefore = time;
+
+    regenerateParticles();
+    applyGravity(deltaTime);
+    integrate(deltaTime);
+    fadeOutParticles();
+    render();
+}
+
+function render() {
+    c.clearRect(-canvas.width / 2,-canvas.height / 2,canvas.width, canvas.height);
+
+    c.beginPath();
+
+    for(var i=0; i<particles.length; i++){ 
+        p = particles[i];
+        c.arc(p.x,p.y,p.radius, 0, Math.PI * 2);
+    }
+
+    c.fill();
+
+}
+
+function regenerateParticles() {
+    while(particles.length>200) particles.shift();
+
+    for(var i = 0; i<1; i++) { 
+        particles.push({
+
+            x: 0,
+            y: 0,
+
+            xVel:(Math.random() - 0.5) * 40,
+            yVel:(Math.random() - 0.5) * 40,
+
+            radius: 1
+
+        });
+    }
+}
+
+function integrate(deltaTime) {
+    for(var i=0, p; i<particles.length; i++){ 
+        p = particles[i];
+        p.x+=p.xVel * deltaTime; 
+        p.y+=p.yVel * deltaTime;
+    }
+}
+
+function fadeOutParticles() {
+     for(var i=0; i<particles.length; i++){ 
+        particles[i].radius*=0.99; 
+    }   
+}
+
+var GRAVITY = 119.81;
+
+function applyGravity(deltaTime) {
+     for(var i=0; i<particles.length; i++){ 
+        particles[i].yVel -= GRAVITY * deltaTime;
+    }   
+}
+
+function applyGravity(deltaTime) {
+    for(var i=0; i<particles.length; i++){ 
+
+        p = particles[i];
+
+        var distance = Math.sqrt(p.x * p.x + p.y * p.y);
+
+        if (distance > 0) {
+
+            var normalizedDisplacement = {
+                x: p.x / distance,
+                y: p.y / distance
+            };
+
+            var gravity = {
+                x: -normalizedDisplacement.x * GRAVITY,
+                y: -normalizedDisplacement.y * GRAVITY
+            };
+
+            p.xVel += gravity.x * deltaTime;
+            p.yVel += gravity.y * deltaTime;
+
+        }
+
+    };
+}
+
+
+function applyGravity(deltaTime) {
+
+    // GRAVITY = Math.sin(Date.now() / 500) * 50;
+
+    for(var i=0; i<particles.length; i++){ 
+
+        p = particles[i];
+
+        var d = { // displacement
+            x: p.x - 20,
+            y: p.y - 0
+        }
+
+        var distance = Math.sqrt(d.x * d.x + d.y * d.y);
+
+        if (distance > 0) {
+
+            var normalizedDisplacement = {
+                x: d.x / distance,
+                y: d.y / distance
+            };
+
+            var gravity = {
+                x: -normalizedDisplacement.x * GRAVITY,
+                y: -normalizedDisplacement.y * GRAVITY
+            };
+
+            p.xVel += gravity.x * deltaTime;
+            p.yVel += gravity.y * deltaTime;
+
+        }
+
+    };
+}
+
+        </script>           
+    </body>
+    
+</html>
+    

@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html lang="en"> 
+<meta charset="utf-8"> 
+    <head>
+    <title> Particles!</title>
+    <style type="text/css"> 
+        body { 
+            background-color:black; 
+            margin:0px; 
+            overflow : hidden; 
+        }
+        </style> 
+    </head>
+    
+    <body>
+        <script>
+
+var canvas = document.createElement('canvas'); 
+document.body.appendChild(canvas); 
+canvas.width = window.innerWidth; 
+canvas.height = window.innerHeight; 
+
+var c = canvas.getContext('2d'); 
+
+var SCALE = 10;
+c.transform(SCALE, 0, 0, -SCALE, canvas.width / 2, canvas.height / 2);
+c.fillStyle = 'white';
+c.strokeStyle = 'white';
+
+
+var particles = []; 
+
+setInterval(loop, 1000/30); 
+
+var timeBefore = Date.now();
+
+function loop() {
+
+    var time = Date.now();
+    var deltaTime = (time - timeBefore) / 1000;
+    timeBefore = time;
+
+    regenerateParticles();
+    resolveCollisions();
+    integrate(deltaTime);
+    fadeOutParticles();
+    render();
+}
+
+var line = {
+    normal: {
+        x: -1,
+        y: 0,
+    },
+    distance: 30
+};
+
+function render() {
+    c.clearRect(-canvas.width / 2,-canvas.height / 2,canvas.width, canvas.height);
+
+    c.fillStyle = 'white';
+
+    if (line.normal.x) {
+        c.beginPath();
+        c.moveTo(-line.normal.x * line.distance, canvas.height / 2);
+        c.lineTo(-line.normal.x * line.distance, -canvas.height);
+        c.stroke();
+    }
+
+    for(var i=0; i<particles.length; i++){ 
+        p = particles[i];
+        c.fillStyle = p.fillStyle || 'white';
+        c.beginPath();
+        c.arc(p.x,p.y,p.radius, 0, Math.PI * 2);
+        c.fill();
+    }
+
+}
+
+function regenerateParticles() {
+    while(particles.length>200) particles.shift();
+
+    for(var i = 0; i<1; i++) { 
+        particles.push({
+
+            x: 0,
+            y: 0,
+
+            xVel: 15,
+            yVel: (Math.random() - 0.5) * 15,
+
+            radius: 1
+
+        });
+    }
+}
+
+function integrate(deltaTime) {
+    for(var i=0, p; i<particles.length; i++){ 
+        p = particles[i];
+        p.x+=p.xVel * deltaTime; 
+        p.y+=p.yVel * deltaTime;
+    }
+}
+
+function fadeOutParticles() {
+     for(var i=0; i<particles.length; i++){ 
+        particles[i].radius*=0.99; 
+    }   
+}
+
+function resolveCollisions() {
+
+    particles.forEach(function (p) {
+
+        if (p.x > line.distance) {
+
+            if (p.xVel > 0) {
+
+                p.fillStyle = 'red';
+
+                p.xVel *= -1;
+
+            }
+
+
+        }
+
+    });
+
+}
+
+        </script>           
+    </body>
+    
+</html>
+    

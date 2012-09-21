@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="en"> 
+<meta charset="utf-8"> 
+	<head>
+	<title> Particles!</title>
+	<style type="text/css"> 
+		body { 
+			background-color:black; 
+			margin:0px; 
+			overflow : hidden; 
+		}
+		</style> 
+	</head>
+	
+	<body>
+		<script>
+
+var canvas = document.createElement('canvas'); 
+document.body.appendChild(canvas); 
+canvas.width = window.innerWidth; 
+canvas.height = window.innerHeight; 
+
+var c = canvas.getContext('2d'); 
+var particles = []; 
+
+setInterval(loop, 1000/30); 
+
+function loop() { 
+	c.clearRect(0,0,canvas.width, canvas.height); 
+	for(var i = 0; i<5; i++) { 
+		var p = {x : canvas.width/2, y:canvas.height/2, xVel:Math.random()*10 -5, yVel:Math.random()*10-5, size : 10};
+			particles.push(p);
+	}
+	while(particles.length>200) particles.shift(); 
+
+ 
+	for(var i=0; i<particles.length; i++){ 
+		p = particles[i];
+		c.fillStyle = 'white';
+		c.fillRect(p.x,p.y,p.size,p.size); 
+		p.x+=p.xVel; 
+		p.y+=p.yVel;
+		
+		p.size*=0.96; 
+	
+	}	
+}		
+
+
+		</script>			
+	</body>
+	
+	
+</html>
+	

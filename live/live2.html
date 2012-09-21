@@ -1,0 +1,238 @@
+<!DOCTYPE HTML>
+<html lang="en"> 
+<meta charset="utf-8"> 
+    <head>
+    <title> Particles!</title>
+    <style type="text/css"> 
+        body { 
+            background-color:black; 
+            margin:0px; 
+            overflow : hidden; 
+        }
+        </style> 
+    </head>
+    
+    <body>
+        <script>
+
+var canvas = document.createElement('canvas'); 
+document.body.appendChild(canvas); 
+canvas.width = window.innerWidth; 
+canvas.height = window.innerHeight; 
+
+var c = canvas.getContext('2d'); 
+
+var SCALE = 10;
+c.transform(SCALE, 0, 0, -SCALE, canvas.width / 2, canvas.height / 2);
+c.fillStyle = 'white';
+
+
+var particles = []; 
+
+setInterval(loop, 1000/30); 
+
+var timeBefore = Date.now();
+
+function loop() {
+
+    var time = Date.now();
+    var deltaTime = (time - timeBefore) / 1000;
+    timeBefore = time;
+
+    regenerateParticles();
+    applyGravity(deltaTime);
+    resolveCollisions(deltaTime);
+    integrate(deltaTime);
+    // fadeOutParticles();
+    render();
+}
+
+function render() {
+    c.clearRect(-canvas.width / 2,-canvas.height / 2,canvas.width, canvas.height);
+
+    for(var i=0; i<particles.length; i++){ 
+        p = particles[i];
+        c.fillStyle = p.fillStyle || 'white';
+        c.beginPath();
+        c.arc(p.x,p.y,p.radius, 0, Math.PI * 2);
+        c.fill();
+    }
+
+}
+
+function regenerateParticles() {
+    while(particles.length>300) return;
+
+    for(var i = 0; i<1; i++) { 
+        particles.push({
+
+            x: 0,
+            y: 0,
+
+            xVel:(Math.random() - 0.5) * 40,
+            yVel:(Math.random() - 0.5) * 40,
+
+            radius: 1
+
+        });
+    }
+}
+
+function integrate(deltaTime) {
+    for(var i=0, p; i<particles.length; i++){ 
+        p = particles[i];
+        p.x+=p.xVel * deltaTime; 
+        p.y+=p.yVel * deltaTime;
+    }
+}
+
+function fadeOutParticles() {
+     for(var i=0; i<particles.length; i++){ 
+        particles[i].radius*=0.99; 
+    }   
+}
+
+var GRAVITY = 119.81;
+
+function applyGravity(deltaTime) {
+     for(var i=0; i<particles.length; i++){ 
+        particles[i].yVel -= GRAVITY * deltaTime;
+    }   
+}
+
+function applyGravity(deltaTime) {
+    for(var i=0; i<particles.length; i++){ 
+
+        p = particles[i];
+
+        var distance = Math.sqrt(p.x * p.x + p.y * p.y);
+
+        if (distance > 0) {
+
+            var normalizedDisplacement = {
+                x: p.x / distance,
+                y: p.y / distance
+            };
+
+            var gravity = {
+                x: -normalizedDisplacement.x * GRAVITY,
+                y: -normalizedDisplacement.y * GRAVITY
+            };
+
+            p.xVel += gravity.x * deltaTime;
+            p.yVel += gravity.y * deltaTime;
+
+        }
+
+    };
+}
+
+
+function applyGravity(deltaTime) {
+
+    // GRAVITY = Math.sin(Date.now() / 500) * 50;
+
+    for(var i=0; i<particles.length; i++){ 
+
+        p = particles[i];
+
+        var d = { // displacement
+            x: p.x - 20,
+            y: p.y - 0
+        }
+
+        var distance = Math.sqrt(d.x * d.x + d.y * d.y);
+
+        if (distance > 0) {
+
+            var normalizedDisplacement = {
+                x: d.x / distance,
+                y: d.y / distance
+            };
+
+            var gravity = {
+                x: -normalizedDisplacement.x * GRAVITY,
+                y: -normalizedDisplacement.y * GRAVITY
+            };
+
+            p.xVel += gravity.x * deltaTime;
+            p.yVel += gravity.y * deltaTime;
+
+        }
+
+    };
+}
+
+function resolveCollisions() {
+
+    for (var i = 0; i < particles.length - 1; i++) {
+        for (var j = i + 1; j < particles.length; j++) {
+
+            var diskA = particles[i];
+            var diskB = particles[j];
+
+            // is contact?
+
+            var displacement = {
+                x: diskA.x - diskB.x,
+                y: diskA.y - diskB.y
+            };
+
+            var distance = Math.sqrt(displacement.x * displacement.x + displacement.y * displacement.y);
+
+            var penetration = diskA.radius + diskB.radius - distance;
+
+            if (penetration > 0) {
+
+                // is colliding contact?
+
+                var contactNormal = {
+                    x: displacement.x / distance,
+                    y: displacement.y / distance
+                };
+
+                var closingVelocity = {
+                    x: diskA.xVel - diskB.xVel,
+                    y: diskA.yVel - diskB.yVel
+                };
+
+                var normalVelocity = contactNormal.x * closingVelocity.x + contactNormal.y * closingVelocity.y;
+
+                if (normalVelocity < 0) {
+                    diskA.fillStyle = 'blue';
+                    diskB.fillStyle = 'blue';
+
+                    // collision response
+
+                    var cor = 0.9;
+
+                    var reflectionVector = {
+                        x: (1 + cor) * contactNormal.x * normalVelocity,
+                        y: (1 + cor) * contactNormal.y * normalVelocity
+                    };
+
+                    diskA.xVel -= reflectionVector.x / 2;
+                    diskA.yVel -= reflectionVector.y / 2;
+
+                    diskB.xVel += reflectionVector.x / 2;
+                    diskB.yVel += reflectionVector.y / 2;
+
+                } else {
+                    diskA.fillStyle = 'white';
+                    diskB.fillStyle = 'white';
+                }
+
+
+            }
+
+
+        }
+    }
+
+}
+
+        </script>           
+    </body>
+    
+</html>
+    
