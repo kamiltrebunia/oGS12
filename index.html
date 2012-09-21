@@ -81,15 +81,15 @@
                     </div>
 
                     <aside class="notes">
-                        <p>I am aware that everyone knows what vector is. I am just making sure that we're on the same foot vocabulary-wise.</p>
+                        <p>So this is a position vector. We define position vector as a displacement of point A from a reference point 0.</p>
                     </aside>
                 </section>
 
                 <section>
-                    <h3>Examples</h3>
+                    <h3>Use cases</h3>
                     <ul>
-                        <li>displacement &rarr; distance</li>
-                        <li>velocity &rarr; speed</li>
+                        <li>displacement (distance)</li>
+                        <li>velocity (speed)</li>
                     </ul>
                 </section>
 
@@ -102,8 +102,130 @@
     };
                     </code></pre>
                 </section>
+
+            </section>
+
+            <section>
+
+                <section>
+                    <h2>Vector subtraction</h2>
+
+                    <div>
+                        <img class="vector" src="http://upload.wikimedia.org/wikipedia/commons/2/24/Vector_subtraction.svg" alt="Diagram illustrating the subtraction a−b of vectors a and b.">
+                    </div>
+
+                    <aside class="notes">
+                        <p>To subtract "b" from "a" place both vectors end points at the same point and draw a vector from the tip of "b" to the tip of "a".</p>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Use cases</h3>
+                    <ul>
+                        <li>displacement (distance)</li>
+                        <li>relative velocity (speed)</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Code</h3>
+                    <pre><code>
+    vector = {
+        x: vectorA.x - vectorB.x,
+        y: vectorA.y - vectorB.y
+    };
+                    </code></pre>
+                </section>
+
             </section>
             
+            <section>
+
+                <section>
+                    <h2>Vector length</h2>
+
+                    <h3>Code</h3>
+                    <pre><code>
+length = Math.sqrt(vector.x * vector.x + vector.y * vector.y);
+                    </code></pre>
+                </section>
+
+            </section>
+            
+            <section>
+
+                <section>
+                    <h2>Unit vector</h2>
+
+                    <img class="unit_vector" src="http://upload.wikimedia.org/wikipedia/commons/8/8c/Vector_normalization.svg" alt="Diagram showing the normalization of a vector a into â.">
+
+                    <aside class="notes">
+                        <p>We keep the direction, but we get rid of length. This vector is one unit long.</p>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Code</h3>
+                    <pre><code>
+unitVector = {
+    x: vector.x / vector.length,
+    y: vector.y / vector.length
+};
+                    </code></pre>
+                </section>
+
+            </section>
+
+            <section>
+
+                <section>
+                    <h2>Normal vector</h2>
+
+                    <p><em>We will use normalized normal vectors (unit vectors).</em></p>
+
+                    <img class="surface_normal" src="http://upload.wikimedia.org/wikipedia/commons/7/7e/Surface_normal_illustration.png" alt="">
+                </section>
+
+            </section>
+
+            <section>
+
+                <section>
+                    <h2>Dot product</h2>
+
+                    <p><em>and <strong>scalar projection</strong></em></p>
+
+                    <img class="dot_product" src="http://upload.wikimedia.org/wikipedia/commons/3/3e/Dot_Product.svg" alt="Diagram showing dot product between two vectors">
+
+                    <aside class="notes">
+                        <p>What we care about is a projection of vector "a" in the direction of "b". It tells us how much is "a" going in the direction of "b".</p>
+                        <p>It's the most useful math you will learn here. It has SO many use cases.</p> 
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Use cases</h3>
+                    <ul>
+                        <li>calculate normal velocity<span class="fragment">...</span></li>
+                        <li class="fragment">...find the angle between two vectors</li>
+                        <li class="fragment">...check if two bodies move in similar direction</li>
+                        <li class="fragment">...neutralize movement in direction of surface normal</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3>Code</h3>
+                    <pre><code>
+dotProduct = vectorA.x * vectorB.x + vectorA.y * vectorB.y;
+                    </code></pre>
+
+                    <aside class="notes">
+                        <p>So as I said before it has so many cool use cases and yet it's so simple.</p> 
+                    </aside>
+                </section>
+
+            </section>
+
             <section>
                 <section>
                     <h2>Rigid Body</h2>
@@ -113,6 +235,7 @@
                     <ul>
                         <li>position</li>
                         <li>velocity</li>
+                        <li>shape, dimensions</li>
                         <li>mass</li>
                         <li class="fragment">
                             entity/material type:
@@ -139,13 +262,13 @@
         },
         
         shape: RigidBody.Shape.CIRCLE,
-        
+
         radius: 1,
+
+        mass: 1,
         
-        type: RigidBody.Type.GOLF_BALL,
-        
-        mass: 1
-        
+        type: RigidBody.Type.SUPER_BALL
+
     };
                     </code></pre>
 
@@ -164,19 +287,19 @@
     };
     
     RigidBody.Type = {
-        GOLF_BALL: 1,   // tip: use binary masks
-        ROCK: 2         // (see use case below)
+        SUPER_BALL: 1,   // tip: use binary masks
+        ROCK: 2          // (see use case below)
     };
     
     RigidBody.COR = {
-        2: 0.5,
-        3: 0.78,
-        4: 0.1
+        2: 1,           // SUPER_BALL + SUPER_BALL
+        3: 0.75,        // SUPER_BALL + ROCK
+        4: 0            // ROCK + ROCK
     };
     
     RigidBody.COF = {
-        3: 0.25,
-        4: 0.8
+        3: 0.25,        // SUPER_BALL + ROCK
+        4: 0.8          // ROCK + ROCK
     };
                     </code></pre>
                 </section>
@@ -189,7 +312,7 @@
                     
                     <h3>Definition</h3>
                     
-                    <p class="block">Predicting object trajectory with numerical integration.</p>
+                    <p class="block">Predicting object trajectory with numerical integration of movement equations.</p>
                     
                     <div class="fragment">
                         <p>...which means...</p>
@@ -258,6 +381,10 @@
     
     }());
                     </code></pre>
+
+                    <aside class="notes">
+                        <p>Show what will happen for small INTERVAL and just mention that there are better integrators.</p>
+                    </aside>
                 </section>
 
             </section>
@@ -277,7 +404,10 @@
                     </li>
                     <li class="fragment">Resolve contact</li>
                 </ol>
-            
+
+                <aside class="notes">
+                    <p>Explain why step #2 is important</p>
+                </aside>
             </section>
             
             <section>
@@ -285,7 +415,9 @@
                 <section>
                     <h3>Particle vs axis-aligned lines</h3>
                     
-                    <p>Highly optimized simulation for a very specific case.</p>
+                    <aside class="notes">
+                        <p>Highly optimized simulation for a very specific case.</p>
+                    </aside>
                 </section>
                 
                 <section>
@@ -346,20 +478,19 @@
                 </section>
                 
                 <section>
-                    <h4>Summary</h4>
+                    <h4>Summary of what we did</h4>
                     
                     <ul>
-                        <li class="fragment">Impulse/velocity simulation</li>
-                        <li class="fragment">Conservation of momentum on reflection</li>
-                        <li class="fragment">Perfectly elastic collision</li>
-                        <li class="fragment">Line has infinite mass</li>
+                        <li class="fragment">Preserved momentum on reflection</li>
+                        <li class="fragment">Simulated perfectly elastic collision</li>
+                        <li class="fragment">Assumed line has infinite mass</li>
                     </ul>
-                
+
                     <aside class="notes">
                         <ul>
-                            <li>Impulse/velocity instead of force/acceleration.</li>
                             <li>Followed Newton's principle of conservation of momentum.</li>
                             <li>Assumed materials types and COR equal 1 for that system meaning that no energy is lost.</li>
+                            <li>Which means that we didn't have to move the line - just our particle</li>
                         </ul>
                     </aside>
                 </section>
@@ -371,7 +502,9 @@
                 <section>
                     <h3>Generic solution</h3>
                     
-                    <p>For circle-circle interactions.</p>
+                    <p class="fragment">For circle-circle interactions.</p>
+
+                    <p class="fragment">No shortcuts.</p>
                 </section>
                     
                 <section>
@@ -398,20 +531,18 @@
                     <h4>Identifying contact type</h4>
                     
                     <pre><code>
-    normal = {
+    contactNormal = {
         x: displacement.x / distance,
         y: displacement.y / distance
     };
     
-    closingVelocity = {
+    closingVelocity = { // relative velocity
         x: circleA.velocity.x - circleB.velocity.x,
         y: circleB.velocity.y - circleB.velocity.y
     };
     
-    normalVelocity = {
-        x: normal.x * closingVelocity.x,
-        y: normal.y * closingVelocity.y
-    };
+    normalVelocity = contactNormal.x * closingVelocity.x +
+                     contactNormal.y * closingVelocity.y;
     
     if (normalVelocity < 0) {
         // collision
@@ -424,10 +555,10 @@
             
                     <pre><code>
     reflectionVector = {
-    
-        x: 2 * normal.x * normalVelocity.x,
-        y: 2 * normal.y * normalVelocity.y
-        
+
+        x: 2 * contactNormal.x * normalVelocity,
+        y: 2 * contactNormal.y * normalVelocity
+
     };
     
     circleA.velocity.x -= reflectionVector.x / 2;
@@ -441,20 +572,40 @@
             </section>
 
             <section>
-                <h3>Restitution</h3>
 
-                <pre><code>
+                <section>
+
+                    <h3>Restitution</h3>
+
+                    <p>Coefficient of restitution</p>
+
+                    <p class="block">Ratio of speeds before and after a collision.</p>
+                    <p class="block">System property - ratios are defined for pairs of objcets.</p>
+                    <p class="block">0 &lt;= COR &lt;= 1</p>
+
+                </section>
+
+                <section>
+
+                    <h4>Code</h4>
+
+                    <pre><code>
     cor = RigidBody.COR[circleA.type + circleB.type];
                     
     reflectionVector = {
         x: (1 + cor) * normal.x * normalVelocity.x,
         y: (1 + cor) * normal.y * normalVelocity.y
     };
-                </code></pre>
+                    </code></pre>
+
+                </section>
+
             </section>
 
             <section>
                 <h3>Mass</h3>
+
+                <h4>Code</h4>
 
                 <pre><code>
     massRatioA = circleB.mass / (circleA.mass + circleB.mass);
@@ -476,7 +627,7 @@
         x: 0,
         y: -9.81
     };
-    
+
     bodies.forEach(function (body) {
     
         body.velocity.x += GRAVITY.x * deltaTime,
@@ -484,6 +635,35 @@
     
     });
                 </code></pre>
+
+                <aside class="notes">
+                    <p>Apply before calculating collisions</p>
+                </aside>
+            </section>
+<!--
+            <section>
+
+                <section>
+
+                    <h3>Friction</h3>
+
+                    <p>Coefficient of friction</p>
+
+                    <p class="block">Force resisting the relative motion of solid surfaces.</p>
+                    <p class="block">System property - ratios are defined for pairs of objcets.</p>
+
+                </section>
+
+                <section>
+
+                    <h4>Code</h4>
+
+                    <pre><code>
+    cof = RigidBody.COF[circleA.type + circleB.type];
+                    </code></pre>
+
+                </section>
+-->
             </section>
 
             <section>
@@ -497,8 +677,10 @@
                     <li><a href="http://box2d.org/">Box2D - A 2D Physics Engine for Games</a></li>
                     <li><a href="http://code.google.com/p/box2dweb/">box2dweb - Box2DFlash port to JavaScript</a></li>
                 </ul>
-                
-                <h3>More links</h3>
+            </section>
+
+            <section class="links">
+                <h2>More links</h2>
                 <p>(lang="pl")
                 <ul>
                     <li><a href="https://www.facebook.com/groups/217169631654737/">JS News Group on Facebook</a></li>

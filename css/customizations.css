@@ -1,5 +1,18 @@
+.reveal section img {
+    background: rgba(255, 255, 255, 0.60);
+}
+
 img.vector {
     height: 75%;
+}
+img.unit_vector {
+	height: 75%;
+}
+img.dot_product {
+	height: 75%;
+}
+img.surface_normal {
+	height: 65%;
 }
 
 section.links h3 {
