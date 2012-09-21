@@ -24,130 +24,87 @@ var c = canvas.getContext('2d');
 
 var SCALE = 10;
 c.transform(SCALE, 0, 0, -SCALE, canvas.width / 2, canvas.height / 2);
-c.fillStyle = 'white';
 
 
 var particles = []; 
 
 setInterval(loop, 1000/30); 
 
-var timeBefore = Date.now();
 
-function loop() {
+var previousTime = Date.now();
+
+function loop() { 
 
     var time = Date.now();
-    var deltaTime = (time - timeBefore) / 1000;
-    timeBefore = time;
+    var deltaTime = (time - previousTime) / 1000;
+    previousTime = time;
 
-    regenerateParticles();
+    regenerateParticles(deltaTime);
     applyGravity(deltaTime);
     integrate(deltaTime);
-    fadeOutParticles();
-    render();
-}
-
-function render() {
-    c.clearRect(-canvas.width / 2,-canvas.height / 2,canvas.width, canvas.height);
-
-    c.beginPath();
-
-    for(var i=0; i<particles.length; i++){ 
-        p = particles[i];
-        c.arc(p.x,p.y,p.radius, 0, Math.PI * 2);
-    }
-
-    c.fill();
+    fadeOut(deltaTime);
+    render(deltaTime);
 
 }
 
-function regenerateParticles() {
-    while(particles.length>200) particles.shift();
+
+function regenerateParticles(deltaTime) {
+    while(particles.length>200) particles.shift(); 
 
     for(var i = 0; i<1; i++) { 
         particles.push({
+            x : 0, 
+            y: 0, 
+            
+            xVel: (Math.random() - 0.5) * 40, 
+            yVel: (Math.random() - 0.5) * 40, 
+            
+            radius : 1,
 
-            x: 0,
-            y: 0,
-
-            xVel:(Math.random() - 0.5) * 40,
-            yVel:(Math.random() - 0.5) * 40,
-
-            radius: 1
-
+            fillStyle: Math.round(Math.random()) ? 'white' : 'yellow'
         });
     }
 }
-
 function integrate(deltaTime) {
-    for(var i=0, p; i<particles.length; i++){ 
-        p = particles[i];
+    particles.forEach(function (p) {
         p.x+=p.xVel * deltaTime; 
         p.y+=p.yVel * deltaTime;
-    }
+    });
 }
+function fadeOut(deltaTime) {
+    particles.forEach(function (p) {
+        p.radius*=0.99;
+    });
+}
+function render(deltaTime) {
+    c.clearRect(-canvas.width / 2,-canvas.height / 2,canvas.width, canvas.height); 
 
-function fadeOutParticles() {
-     for(var i=0; i<particles.length; i++){ 
-        particles[i].radius*=0.99; 
-    }   
+    particles.forEach(function (p) {
+        c.fillStyle = p.fillStyle || 'white';
+        c.beginPath();
+        c.arc(p.x,p.y,p.radius,0, Math.PI * 2); 
+        c.fill();
+    });
 }
 
 var GRAVITY = 119.81;
 
-function applyGravity(deltaTime) {
-     for(var i=0; i<particles.length; i++){ 
-        particles[i].yVel -= GRAVITY * deltaTime;
-    }   
-}
+function applyGravity (deltaTime) {
 
-function applyGravity(deltaTime) {
-    for(var i=0; i<particles.length; i++){ 
+    particles.forEach(function (p) {
 
-        p = particles[i];
-
-        var distance = Math.sqrt(p.x * p.x + p.y * p.y);
-
-        if (distance > 0) {
-
-            var normalizedDisplacement = {
-                x: p.x / distance,
-                y: p.y / distance
-            };
-
-            var gravity = {
-                x: -normalizedDisplacement.x * GRAVITY,
-                y: -normalizedDisplacement.y * GRAVITY
-            };
-
-            p.xVel += gravity.x * deltaTime;
-            p.yVel += gravity.y * deltaTime;
-
-        }
-
-    };
-}
-
-
-function applyGravity(deltaTime) {
-
-    // GRAVITY = Math.sin(Date.now() / 500) * 50;
-
-    for(var i=0; i<particles.length; i++){ 
-
-        p = particles[i];
-
-        var d = { // displacement
+        var displacement = {
             x: p.x - 20,
             y: p.y - 0
-        }
+        };
 
-        var distance = Math.sqrt(d.x * d.x + d.y * d.y);
+        var distance = Math.sqrt(displacement.x * displacement.x + displacement.y * displacement.y);
 
         if (distance > 0) {
 
             var normalizedDisplacement = {
-                x: d.x / distance,
-                y: d.y / distance
+                x: displacement.x / distance,
+                y: displacement.y / distance
             };
 
             var gravity = {
@@ -160,11 +117,13 @@ function applyGravity(deltaTime) {
 
         }
 
-    };
+    });
+
 }
 
         </script>           
     </body>
+    
     
 </html>
     

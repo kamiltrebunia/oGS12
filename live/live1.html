@@ -24,105 +24,106 @@ var c = canvas.getContext('2d');
 
 var SCALE = 10;
 c.transform(SCALE, 0, 0, -SCALE, canvas.width / 2, canvas.height / 2);
-c.fillStyle = 'white';
-c.strokeStyle = 'white';
 
 
 var particles = []; 
 
 setInterval(loop, 1000/30); 
 
-var timeBefore = Date.now();
 
-function loop() {
+var previousTime = Date.now();
+
+function loop() { 
 
     var time = Date.now();
-    var deltaTime = (time - timeBefore) / 1000;
-    timeBefore = time;
+    var deltaTime = (time - previousTime) / 1000;
+    previousTime = time;
 
-    regenerateParticles();
-    resolveCollisions();
+    regenerateParticles(deltaTime);
+    //applyGravity(deltaTime);
+    collide();
     integrate(deltaTime);
-    fadeOutParticles();
-    render();
-}
-
-var line = {
-    normal: {
-        x: -1,
-        y: 0,
-    },
-    distance: 30
-};
-
-function render() {
-    c.clearRect(-canvas.width / 2,-canvas.height / 2,canvas.width, canvas.height);
-
-    c.fillStyle = 'white';
-
-    if (line.normal.x) {
-        c.beginPath();
-        c.moveTo(-line.normal.x * line.distance, canvas.height / 2);
-        c.lineTo(-line.normal.x * line.distance, -canvas.height);
-        c.stroke();
-    }
-
-    for(var i=0; i<particles.length; i++){ 
-        p = particles[i];
-        c.fillStyle = p.fillStyle || 'white';
-        c.beginPath();
-        c.arc(p.x,p.y,p.radius, 0, Math.PI * 2);
-        c.fill();
-    }
+    // fadeOut(deltaTime);
+    render(deltaTime);
 
 }
 
-function regenerateParticles() {
-    while(particles.length>200) particles.shift();
+
+function regenerateParticles(deltaTime) {
+    while(particles.length>200) particles.shift(); 
 
     for(var i = 0; i<1; i++) { 
         particles.push({
+            x : 0, 
+            y: 0, 
+            
+            xVel: (Math.random()) * 40, 
+            yVel: (Math.random() - 0.5) * 20, 
+            
+            radius : 1,
 
-            x: 0,
-            y: 0,
-
-            xVel: 15,
-            yVel: (Math.random() - 0.5) * 15,
-
-            radius: 1
-
+            // fillStyle: Math.round(Math.random()) ? 'white' : 'yellow',
+            fillStyle: 'white'
         });
     }
 }
-
 function integrate(deltaTime) {
-    for(var i=0, p; i<particles.length; i++){ 
-        p = particles[i];
+    particles.forEach(function (p) {
         p.x+=p.xVel * deltaTime; 
         p.y+=p.yVel * deltaTime;
-    }
+    });
+}
+function fadeOut(deltaTime) {
+    particles.forEach(function (p) {
+        p.radius*=0.99;
+    });
 }
 
-function fadeOutParticles() {
-     for(var i=0; i<particles.length; i++){ 
-        particles[i].radius*=0.99; 
-    }   
+c.strokeStyle = 'white';
+
+function render(deltaTime) {
+    c.clearRect(-canvas.width / 2,-canvas.height / 2,canvas.width, canvas.height); 
+
+    c.beginPath();
+    c.moveTo(30, canvas.height / 2);
+    c.lineTo(30, -canvas.height);
+    c.stroke();
+
+    particles.forEach(function (p) {
+        c.fillStyle = p.fillStyle || 'white';
+        c.beginPath();
+        c.arc(p.x,p.y,p.radius,0, Math.PI * 2); 
+        c.fill();
+    });
 }
 
-function resolveCollisions() {
+var GRAVITY = 119.81;
+
+function applyGravity (deltaTime) {
 
     particles.forEach(function (p) {
 
-        if (p.x > line.distance) {
+        var displacement = {
+            x: p.x - 20,
+            y: p.y - 0
+        };
 
-            if (p.xVel > 0) {
+        var distance = Math.sqrt(displacement.x * displacement.x + displacement.y * displacement.y);
 
-                p.fillStyle = 'red';
+        if (distance > 0) {
 
-                p.xVel *= -1;
+            var normalizedDisplacement = {
+                x: displacement.x / distance,
+                y: displacement.y / distance
+            };
 
-            }
+            var gravity = {
+                x: -normalizedDisplacement.x * GRAVITY,
+                y: -normalizedDisplacement.y * GRAVITY
+            };
 
+            p.xVel += gravity.x * deltaTime;
+            p.yVel += gravity.y * deltaTime;
 
         }
 
@@ -130,8 +131,29 @@ function resolveCollisions() {
 
 }
 
+function collide(deltaTime) {
+
+    particles.forEach(function (p) {
+
+        if (p.x > 30) {
+
+            if (p.xVel > 0) {
+
+                p.xVel *= -1;
+
+                p.fillStyle = 'yellow';
+
+            }
+
+        }
+
+    })
+
+}
+
         </script>           
     </body>
+    
     
 </html>
     
